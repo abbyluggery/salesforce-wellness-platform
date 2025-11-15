@@ -163,6 +163,95 @@ private class HolisticDashboardControllerTest {
         }
 
         insert routines;
+
+        // Create new wellness tracking data
+        Daily_Routine__c todayRoutine = routines[0];
+
+        // Create Mood Entries
+        List<Mood_Entry__c> moodEntries = new List<Mood_Entry__c>();
+        for (Integer i = 0; i < 5; i++) {
+            moodEntries.add(new Mood_Entry__c(
+                Daily_Routine__c = todayRoutine.Id,
+                Mood_Score__c = 7 + i,
+                Energy_Score__c = 6 + i,
+                Time_of_Day__c = 'Morning',
+                Notes__c = 'Test mood entry ' + i,
+                Timestamp__c = DateTime.now().addDays(-i)
+            ));
+        }
+        insert moodEntries;
+
+        // Create Gratitude Entries
+        List<Gratitude_Entry__c> gratitudeEntries = new List<Gratitude_Entry__c>();
+        for (Integer i = 0; i < 3; i++) {
+            gratitudeEntries.add(new Gratitude_Entry__c(
+                Daily_Routine__c = todayRoutine.Id,
+                Gratitude_Text__c = 'Thankful for test ' + i,
+                Category__c = 'Personal',
+                Intensity__c = 8,
+                Date_Recorded__c = Date.today().addDays(-i)
+            ));
+        }
+        insert gratitudeEntries;
+
+        // Create Win Entries
+        List<Win_Entry__c> winEntries = new List<Win_Entry__c>();
+        for (Integer i = 0; i < 4; i++) {
+            winEntries.add(new Win_Entry__c(
+                Daily_Routine__c = todayRoutine.Id,
+                Win_Text__c = 'Completed test win ' + i,
+                Category__c = 'Work',
+                Timestamp__c = DateTime.now().addDays(-i)
+            ));
+        }
+        insert winEntries;
+
+        // Create Therapy Sessions
+        List<Therapy_Step_Completion__c> therapySessions = new List<Therapy_Step_Completion__c>();
+        for (Integer i = 0; i < 2; i++) {
+            therapySessions.add(new Therapy_Step_Completion__c(
+                Daily_Routine__c = todayRoutine.Id,
+                Therapy_Type__c = 'CBT',
+                Step_Number__c = i + 1,
+                Step_Name__c = 'Test step ' + i,
+                Effectiveness_Rating__c = 8
+            ));
+        }
+        insert therapySessions;
+
+        // Create Negative Thought Analyses
+        List<Negative_Thought_Analysis__c> analyses = new List<Negative_Thought_Analysis__c>();
+        analyses.add(new Negative_Thought_Analysis__c(
+            Daily_Routine__c = todayRoutine.Id,
+            Original_Thought__c = 'Test negative thought',
+            Severity_Score__c = 7,
+            Reframed_Thought__c = 'Test reframe'
+        ));
+        insert analyses;
+
+        // Create Evening Routines
+        List<Evening_Routine_Tracking__c> eveningRoutines = new List<Evening_Routine_Tracking__c>();
+        for (Integer i = 0; i < 3; i++) {
+            eveningRoutines.add(new Evening_Routine_Tracking__c(
+                Date__c = Date.today().addDays(-i),
+                Sleep_Quality__c = 7,
+                Bedtime__c = Time.newInstance(22, 30, 0, 0)
+            ));
+        }
+        insert eveningRoutines;
+
+        // Create Routine Task Timers
+        List<Routine_Task_Timer__c> taskTimers = new List<Routine_Task_Timer__c>();
+        for (Integer i = 0; i < 5; i++) {
+            taskTimers.add(new Routine_Task_Timer__c(
+                Daily_Routine__c = todayRoutine.Id,
+                Task_Name__c = 'Exercise',
+                Start_Time__c = DateTime.now().addDays(-i).addHours(-1),
+                End_Time__c = DateTime.now().addDays(-i),
+                Expected_Duration_Minutes__c = 30
+            ));
+        }
+        insert taskTimers;
     }
 
     @isTest
@@ -257,6 +346,20 @@ private class HolisticDashboardControllerTest {
         // Verify weekly stats
         System.assertEquals(true, wellnessStats.routinesThisWeek > 0, 'Should have routines logged this week');
         System.assertEquals(true, wellnessStats.exerciseDaysThisWeek >= 0, 'Should have exercise days count');
+
+        // Verify new wellness metrics
+        System.assertEquals(true, wellnessStats.moodEntriesThisWeek > 0, 'Should have mood entries');
+        System.assertNotEquals(null, wellnessStats.avgMoodThisWeek, 'Should have average mood');
+        System.assertNotEquals(null, wellnessStats.avgEnergyThisWeek, 'Should have average energy');
+        System.assertEquals(true, wellnessStats.gratitudeEntriesThisWeek > 0, 'Should have gratitude entries');
+        System.assertEquals(true, wellnessStats.winEntriesThisWeek > 0, 'Should have win entries');
+        System.assertEquals(true, wellnessStats.therapySessionsThisWeek > 0, 'Should have therapy sessions');
+        System.assertEquals(true, wellnessStats.thoughtAnalysesThisWeek > 0, 'Should have thought analyses');
+        System.assertEquals(true, wellnessStats.eveningRoutinesThisWeek > 0, 'Should have evening routines');
+        System.assertEquals(true, wellnessStats.routineTasksTrackedThisWeek > 0, 'Should have routine tasks');
+        System.assertNotEquals(null, wellnessStats.moodTrend, 'Should have mood trend');
+        System.assertEquals(true, wellnessStats.recentWins.size() > 0, 'Should have recent wins');
+        System.assertEquals(true, wellnessStats.recentGratitude.size() > 0, 'Should have recent gratitude');
     }
 
     @isTest
@@ -268,6 +371,13 @@ private class HolisticDashboardControllerTest {
         delete [SELECT Id FROM Shopping_List_Item__c];
         delete [SELECT Id FROM Shopping_List__c];
         delete [SELECT Id FROM Store_Coupon__c];
+        delete [SELECT Id FROM Routine_Task_Timer__c];
+        delete [SELECT Id FROM Evening_Routine_Tracking__c];
+        delete [SELECT Id FROM Negative_Thought_Analysis__c];
+        delete [SELECT Id FROM Therapy_Step_Completion__c];
+        delete [SELECT Id FROM Win_Entry__c];
+        delete [SELECT Id FROM Gratitude_Entry__c];
+        delete [SELECT Id FROM Mood_Entry__c];
         delete [SELECT Id FROM Daily_Routine__c];
 
         Test.startTest();
@@ -281,6 +391,9 @@ private class HolisticDashboardControllerTest {
         System.assertEquals(0, data.thisWeekMeals.size(), 'Should have 0 meals');
         System.assertEquals(0, data.shopping.listsReady, 'Should have 0 shopping lists');
         System.assertEquals(null, data.wellness.todayMood, 'Should have no mood data');
+        System.assertEquals(0, data.wellness.moodEntriesThisWeek, 'Should have 0 mood entries');
+        System.assertEquals(0, data.wellness.winEntriesThisWeek, 'Should have 0 wins');
+        System.assertEquals(0, data.wellness.gratitudeEntriesThisWeek, 'Should have 0 gratitude entries');
     }
 
     @isTest

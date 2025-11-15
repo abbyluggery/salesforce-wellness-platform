@@ -241,6 +241,7 @@ public with sharing class HolisticDashboardController {
      */
     private static WellnessStats getWellnessStats() {
         WellnessStats stats = new WellnessStats();
+        Date weekStart = Date.today().toStartOfWeek();
 
         // Today's wellness data
         List<Daily_Routine__c> todayRoutine = [
@@ -266,8 +267,7 @@ public with sharing class HolisticDashboardController {
                 dr.Morning_Routine_Complete__c : false;
         }
 
-        // This week's stats
-        Date weekStart = Date.today().toStartOfWeek();
+        // This week's routines
         List<Daily_Routine__c> thisWeekRoutines = [
             SELECT Energy_Level_Morning__c, Energy_Level_Afternoon__c,
                    Energy_Level_Evening__c, Exercise_Completed__c
@@ -303,6 +303,114 @@ public with sharing class HolisticDashboardController {
         stats.exerciseDaysThisWeek = exerciseDays;
         stats.avgMoodScore = energyReadings > 0 ?
             totalEnergyScore / energyReadings : 0;
+
+        // Mood tracking metrics (new)
+        List<Mood_Entry__c> weekMoodEntries = [
+            SELECT Mood_Score__c, Energy_Score__c
+            FROM Mood_Entry__c
+            WHERE CreatedDate >= :weekStart
+        ];
+
+        stats.moodEntriesThisWeek = weekMoodEntries.size();
+
+        if (!weekMoodEntries.isEmpty()) {
+            Decimal totalMood = 0;
+            Decimal totalEnergy = 0;
+            Integer moodCount = 0;
+            Integer energyCount = 0;
+
+            for (Mood_Entry__c entry : weekMoodEntries) {
+                if (entry.Mood_Score__c != null) {
+                    totalMood += entry.Mood_Score__c;
+                    moodCount++;
+                }
+                if (entry.Energy_Score__c != null) {
+                    totalEnergy += entry.Energy_Score__c;
+                    energyCount++;
+                }
+            }
+
+            stats.avgMoodThisWeek = moodCount > 0 ? (totalMood / moodCount).setScale(1) : null;
+            stats.avgEnergyThisWeek = energyCount > 0 ? (totalEnergy / energyCount).setScale(1) : null;
+        }
+
+        // Gratitude entries this week
+        stats.gratitudeEntriesThisWeek = [
+            SELECT COUNT()
+            FROM Gratitude_Entry__c
+            WHERE CreatedDate >= :weekStart
+        ];
+
+        // Win entries this week
+        stats.winEntriesThisWeek = [
+            SELECT COUNT()
+            FROM Win_Entry__c
+            WHERE CreatedDate >= :weekStart
+        ];
+
+        // Therapy sessions this week
+        stats.therapySessionsThisWeek = [
+            SELECT COUNT()
+            FROM Therapy_Step_Completion__c
+            WHERE CreatedDate >= :weekStart
+        ];
+
+        // Negative thought analyses this week
+        stats.thoughtAnalysesThisWeek = [
+            SELECT COUNT()
+            FROM Negative_Thought_Analysis__c
+            WHERE CreatedDate >= :weekStart
+        ];
+
+        // Evening routines tracked this week
+        stats.eveningRoutinesThisWeek = [
+            SELECT COUNT()
+            FROM Evening_Routine_Tracking__c
+            WHERE Date__c >= :weekStart
+        ];
+
+        // Routine task timers this week
+        stats.routineTasksTrackedThisWeek = [
+            SELECT COUNT()
+            FROM Routine_Task_Timer__c
+            WHERE CreatedDate >= :weekStart
+        ];
+
+        // Mood trend analysis
+        try {
+            String moodTrend = MoodTrackerService.analyzeMoodTrend(UserInfo.getUserId(), 7);
+            stats.moodTrend = moodTrend;
+        } catch (Exception e) {
+            stats.moodTrend = 'Unknown';
+        }
+
+        // Get recent wins for display
+        List<Win_Entry__c> recentWins = [
+            SELECT Win_Text__c, Category__c, CreatedDate
+            FROM Win_Entry__c
+            WHERE CreatedDate >= :weekStart
+            ORDER BY CreatedDate DESC
+            LIMIT 3
+        ];
+
+        stats.recentWins = new List<String>();
+        for (Win_Entry__c win : recentWins) {
+            stats.recentWins.add(win.Win_Text__c);
+        }
+
+        // Get recent gratitude entries
+        List<Gratitude_Entry__c> recentGratitude = [
+            SELECT Gratitude_Text__c, Category__c, Intensity__c
+            FROM Gratitude_Entry__c
+            WHERE CreatedDate >= :weekStart
+            ORDER BY CreatedDate DESC
+            LIMIT 3
+        ];
+
+        stats.recentGratitude = new List<String>();
+        for (Gratitude_Entry__c entry : recentGratitude) {
+            stats.recentGratitude.add(entry.Gratitude_Text__c);
+        }
 
         return stats;
     }
@@ -391,6 +499,7 @@ public with sharing class HolisticDashboardController {
     }
 
     public class WellnessStats {
+        // Existing fields
         @AuraEnabled public String todayMood { get; set; }
         @AuraEnabled public Integer todayEnergy { get; set; }
         @AuraEnabled public Integer todayStress { get; set; }
@@ -399,6 +508,20 @@ public with sharing class HolisticDashboardController {
         @AuraEnabled public Integer exerciseDaysThisWeek { get; set; }
         @AuraEnabled public Integer avgMoodScore { get; set; }
 
+        // New wellness tracking fields
+        @AuraEnabled public Integer moodEntriesThisWeek { get; set; }
+        @AuraEnabled public Decimal avgMoodThisWeek { get; set; }
+        @AuraEnabled public Decimal avgEnergyThisWeek { get; set; }
+        @AuraEnabled public Integer gratitudeEntriesThisWeek { get; set; }
+        @AuraEnabled public Integer winEntriesThisWeek { get; set; }
+        @AuraEnabled public Integer therapySessionsThisWeek { get; set; }
+        @AuraEnabled public Integer thoughtAnalysesThisWeek { get; set; }
+        @AuraEnabled public Integer eveningRoutinesThisWeek { get; set; }
+        @AuraEnabled public Integer routineTasksTrackedThisWeek { get; set; }
+        @AuraEnabled public String moodTrend { get; set; }
+        @AuraEnabled public List<String> recentWins { get; set; }
+        @AuraEnabled public List<String> recentGratitude { get; set; }
+
         public WellnessStats() {
             this.todayEnergy = 0;
             this.todayStress = 0;
@@ -406,6 +529,15 @@ public with sharing class HolisticDashboardController {
             this.routinesThisWeek = 0;
             this.exerciseDaysThisWeek = 0;
             this.avgMoodScore = 0;
+            this.moodEntriesThisWeek = 0;
+            this.gratitudeEntriesThisWeek = 0;
+            this.winEntriesThisWeek = 0;
+            this.therapySessionsThisWeek = 0;
+            this.thoughtAnalysesThisWeek = 0;
+            this.eveningRoutinesThisWeek = 0;
+            this.routineTasksTrackedThisWeek = 0;
+            this.recentWins = new List<String>();
+            this.recentGratitude = new List<String>();
         }
     }
 }
