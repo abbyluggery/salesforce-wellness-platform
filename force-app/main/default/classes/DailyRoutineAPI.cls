@@ -88,7 +88,7 @@ global with sharing class DailyRoutineAPI {
      */
     global class MoodData {
         public Integer mood;
-        public String trigger;
+        public String moodTrigger;
         public String notes;
         public DateTime timestamp;
         public Id dailyRoutineId;
@@ -462,8 +462,8 @@ global with sharing class DailyRoutineAPI {
             entry.Timestamp__c = moodData.timestamp != null ? moodData.timestamp : System.now();
 
             // Store trigger in notes if provided
-            if (String.isNotBlank(moodData.trigger)) {
-                String noteText = 'Trigger: ' + moodData.trigger;
+            if (String.isNotBlank(moodData.moodTrigger)) {
+                String noteText = 'Trigger: ' + moodData.moodTrigger;
                 if (String.isNotBlank(moodData.notes)) {
                     noteText += '\n' + moodData.notes;
                 }

@@ -132,10 +132,13 @@ public with sharing class NegativeThoughtDetector {
             SELECT Id, Notes__c
             FROM Mood_Entry__c
             WHERE Id IN :moodEntryIds
-            AND Notes__c != null
         ];
 
         for (Mood_Entry__c mood : moods) {
+            // Skip if Notes__c is blank
+            if (String.isBlank(mood.Notes__c)) {
+                continue;
+            }
             try {
                 createAnalysis(mood.Notes__c, mood.Id);
             } catch (Exception e) {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Pattern__c</fullName>
+    <label>Primary Pattern</label>
+    <description>Primary imposter syndrome pattern detected</description>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Discount Success</fullName>
+                <default>false</default>
+                <label>Discount Success</label>
+            </value>
+            <value>
+                <fullName>Fear of Exposure</fullName>
+                <default>false</default>
+                <label>Fear of Exposure</label>
+            </value>
+            <value>
+                <fullName>Attribute to Luck</fullName>
+                <default>false</default>
+                <label>Attribute to Luck</label>
+            </value>
+            <value>
+                <fullName>Minimize Accomplishments</fullName>
+                <default>false</default>
+                <label>Minimize Accomplishments</label>
+            </value>
+            <value>
+                <fullName>Feel Undeserving</fullName>
+                <default>false</default>
+                <label>Feel Undeserving</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <trackTrending>false</trackTrending>
+</CustomField>

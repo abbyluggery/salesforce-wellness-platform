@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Severity_Score__c</fullName>
+    <label>Severity Score</label>
+    <description>Severity score from 1-10</description>
+    <type>Number</type>
+    <precision>2</precision>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+</CustomField>
