@@ -1,0 +1,93 @@
+.today-snapshot {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.snapshot-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+.snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.snapshot-item {
+    text-align: center;
+}
+
+.snapshot-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.snapshot-value {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.snapshot-label {
+    font-size: 0.75rem;
+    opacity: 0.9;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 0.5rem;
+    background-color: #f3f3f3;
+    border-radius: 0.25rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #706e6b;
+    margin-top: 0.25rem;
+}
+
+.trend-indicator {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #f0f4f8;
+    border-radius: 0.25rem;
+}
+
+.win-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.5rem;
+    background-color: #f9f9f9;
+    border-left: 3px solid #667eea;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .snapshot-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

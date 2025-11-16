@@ -30,24 +30,6 @@
         <triggerType>Scheduled</triggerType>
     </start>
     <status>Active</status>
-    <actionCalls>
-        <name>Get_Weekly_Mood_Summary</name>
-        <label>Get Weekly Mood Summary</label>
-        <locationX>176</locationX>
-        <locationY>134</locationY>
-        <actionName>MoodInsightsInvocable</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Check_If_Has_Mood_Data</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <nameSegment>MoodInsightsInvocable</nameSegment>
-        <outputParameters>
-            <assignToReference>MoodSummary</assignToReference>
-            <name>output</name>
-        </outputParameters>
-        <versionSegment>1</versionSegment>
-    </actionCalls>
     <decisions>
         <name>Check_If_Has_Mood_Data</name>
         <label>Check If Has Mood Data</label>
@@ -73,6 +55,24 @@
             <label>Has Mood Entries</label>
         </rules>
     </decisions>
+    <actionCalls>
+        <name>Get_Weekly_Mood_Summary</name>
+        <label>Get Weekly Mood Summary</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <actionName>MoodInsightsInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_If_Has_Mood_Data</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>MoodInsightsInvocable</nameSegment>
+        <outputParameters>
+            <assignToReference>MoodSummary</assignToReference>
+            <name>output</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
     <actionCalls>
         <name>Send_Mood_Summary_Email</name>
         <label>Send Mood Summary Email</label>

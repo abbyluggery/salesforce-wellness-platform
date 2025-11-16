@@ -1,0 +1,104 @@
+<template>
+    <lightning-card title="Job Search" icon-name="standard:work_order">
+        <div slot="actions">
+            <lightning-button-menu
+                alternative-text="Actions"
+                icon-name="utility:down"
+                menu-alignment="right">
+                <lightning-menu-item
+                    value="add"
+                    label="Add Job"
+                    icon-name="utility:add">
+                </lightning-menu-item>
+                <lightning-menu-item
+                    value="research"
+                    label="Research Company"
+                    icon-name="utility:search">
+                </lightning-menu-item>
+            </lightning-button-menu>
+        </div>
+
+        <div class="slds-p-around_medium">
+            <template if:false={isLoading}>
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">{totalApplications}</div>
+                        <div class="stat-label">Total Applications</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{applicationsThisWeek}</div>
+                        <div class="stat-label">This Week</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{interviewsScheduled}</div>
+                        <div class="stat-label">Interviews</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{offers}</div>
+                        <div class="stat-label">Offers</div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Interviews -->
+                <template if:true={hasUpcomingInterviews}>
+                    <div class="slds-m-top_medium">
+                        <div class="slds-text-heading_small slds-m-bottom_x-small">
+                            Upcoming Interviews
+                        </div>
+                        <template for:each={upcomingInterviews} for:item="interview">
+                            <div key={interview.id} class="interview-item slds-m-bottom_x-small">
+                                <lightning-icon
+                                    icon-name="standard:event"
+                                    size="x-small"
+                                    class="slds-m-right_x-small">
+                                </lightning-icon>
+                                <div class="interview-details">
+                                    <div class="interview-company">{interview.company}</div>
+                                    <div class="interview-position">{interview.position}</div>
+                                    <div class="interview-date">
+                                        <lightning-formatted-date-time
+                                            value={interview.date}>
+                                        </lightning-formatted-date-time>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+
+                <!-- Recent AI Insights -->
+                <template if:true={hasAiInsights}>
+                    <div class="slds-m-top_medium">
+                        <div class="slds-text-heading_small slds-m-bottom_x-small">
+                            Recent AI Insights
+                        </div>
+                        <div class="ai-insight">
+                            <lightning-icon
+                                icon-name="custom:custom19"
+                                size="x-small"
+                                class="slds-m-right_x-small">
+                            </lightning-icon>
+                            <span>{latestInsight}</span>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Loading State -->
+            <template if:true={isLoading}>
+                <lightning-spinner
+                    alternative-text="Loading..."
+                    size="small">
+                </lightning-spinner>
+            </template>
+
+            <!-- Error State -->
+            <template if:true={error}>
+                <div class="slds-text-color_error">
+                    {error}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

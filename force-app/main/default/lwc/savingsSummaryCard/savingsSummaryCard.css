@@ -1,0 +1,87 @@
+.savings-highlight {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.savings-amount {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.savings-label {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 0.5rem;
+    background-color: #f3f3f3;
+    border-radius: 0.25rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #f5576c;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #706e6b;
+    margin-top: 0.25rem;
+}
+
+.high-value-alert {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fef5e7;
+    border-left: 4px solid #f39c12;
+    border-radius: 0.25rem;
+}
+
+.alert-title {
+    font-weight: bold;
+    color: #d68910;
+    margin-bottom: 0.25rem;
+}
+
+.alert-detail {
+    font-size: 0.875rem;
+    color: #7d6608;
+}
+
+.tips-container {
+    background-color: #f0f4f8;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+}
+
+.tip-item {
+    display: flex;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .savings-amount {
+        font-size: 2rem;
+    }
+}

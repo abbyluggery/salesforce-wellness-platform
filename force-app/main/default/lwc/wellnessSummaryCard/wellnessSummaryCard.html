@@ -1,0 +1,124 @@
+<template>
+    <lightning-card title="Wellness Tracking" icon-name="standard:customer_360">
+        <div slot="actions">
+            <lightning-button-menu
+                alternative-text="Actions"
+                icon-name="utility:down"
+                menu-alignment="right">
+                <lightning-menu-item
+                    value="mood"
+                    label="Log Mood"
+                    icon-name="utility:emoji">
+                </lightning-menu-item>
+                <lightning-menu-item
+                    value="win"
+                    label="Add Win"
+                    icon-name="utility:like">
+                </lightning-menu-item>
+                <lightning-menu-item
+                    value="gratitude"
+                    label="Add Gratitude"
+                    icon-name="utility:favorite">
+                </lightning-menu-item>
+            </lightning-button-menu>
+        </div>
+
+        <div class="slds-p-around_medium">
+            <template if:false={isLoading}>
+                <!-- Today's Snapshot -->
+                <div class="today-snapshot">
+                    <div class="snapshot-title">Today's Wellness</div>
+                    <div class="snapshot-grid">
+                        <div class="snapshot-item">
+                            <div class="snapshot-icon">😊</div>
+                            <div class="snapshot-value">{todayMood}</div>
+                            <div class="snapshot-label">Mood</div>
+                        </div>
+                        <div class="snapshot-item">
+                            <div class="snapshot-icon">⚡</div>
+                            <div class="snapshot-value">{todayEnergy}</div>
+                            <div class="snapshot-label">Energy</div>
+                        </div>
+                        <div class="snapshot-item">
+                            <div class="snapshot-icon">🎯</div>
+                            <div class="snapshot-value">{winsThisWeek}</div>
+                            <div class="snapshot-label">Wins</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Stats -->
+                <div class="slds-m-top_medium">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">{moodEntriesThisWeek}</div>
+                            <div class="stat-label">Mood Entries</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">{gratitudeEntriesThisWeek}</div>
+                            <div class="stat-label">Gratitude</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">{therapySessionsThisWeek}</div>
+                            <div class="stat-label">Therapy Steps</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">{thoughtAnalysesThisWeek}</div>
+                            <div class="stat-label">Thought Analyses</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood Trend -->
+                <template if:true={hasMoodTrend}>
+                    <div class="slds-m-top_medium">
+                        <div class="trend-indicator">
+                            <lightning-icon
+                                icon-name={trendIcon}
+                                size="x-small"
+                                variant={trendVariant}>
+                            </lightning-icon>
+                            <span class="slds-m-left_x-small">
+                                Mood Trend: <strong>{moodTrend}</strong>
+                            </span>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Recent Wins -->
+                <template if:true={hasRecentWins}>
+                    <div class="slds-m-top_medium">
+                        <div class="slds-text-heading_small slds-m-bottom_x-small">
+                            Recent Wins
+                        </div>
+                        <template for:each={recentWins} for:item="win">
+                            <div key={win} class="win-item slds-m-bottom_x-small">
+                                <lightning-icon
+                                    icon-name="utility:like"
+                                    size="x-small"
+                                    class="slds-m-right_x-small">
+                                </lightning-icon>
+                                <span>{win}</span>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Loading State -->
+            <template if:true={isLoading}>
+                <lightning-spinner
+                    alternative-text="Loading..."
+                    size="small">
+                </lightning-spinner>
+            </template>
+
+            <!-- Error State -->
+            <template if:true={error}>
+                <div class="slds-text-color_error">
+                    {error}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

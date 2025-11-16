@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>false</isExposed>
+    <masterLabel>Wellness Summary Card</masterLabel>
+    <description>Summary card showing wellness tracking statistics including mood, energy, wins, and gratitude</description>
+</LightningComponentBundle>

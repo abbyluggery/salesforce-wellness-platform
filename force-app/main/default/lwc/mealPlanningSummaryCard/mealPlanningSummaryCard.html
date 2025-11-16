@@ -1,0 +1,95 @@
+<template>
+    <lightning-card title="Meal Planning" icon-name="standard:product">
+        <div slot="actions">
+            <lightning-button-menu
+                alternative-text="Actions"
+                icon-name="utility:down"
+                menu-alignment="right">
+                <lightning-menu-item
+                    value="generate"
+                    label="Generate Plan"
+                    icon-name="utility:magic">
+                </lightning-menu-item>
+                <lightning-menu-item
+                    value="recipes"
+                    label="View Recipes"
+                    icon-name="utility:list">
+                </lightning-menu-item>
+            </lightning-button-menu>
+        </div>
+
+        <div class="slds-p-around_medium">
+            <template if:false={isLoading}>
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">{mealsPlanned}</div>
+                        <div class="stat-label">Meals Planned</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{mealsCompleted}</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${savingsAmount}</div>
+                        <div class="stat-label">Coupon Savings</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{shoppingItems}</div>
+                        <div class="stat-label">Shopping Items</div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <template if:true={showProgress}>
+                    <div class="slds-m-top_medium">
+                        <div class="progress-label">
+                            Weekly Meal Plan Progress
+                        </div>
+                        <lightning-progress-bar
+                            value={progressPercent}
+                            variant="circular">
+                        </lightning-progress-bar>
+                    </div>
+                </template>
+
+                <!-- This Week's Meals Preview -->
+                <template if:true={hasMealsThisWeek}>
+                    <div class="slds-m-top_medium">
+                        <div class="slds-text-heading_small slds-m-bottom_x-small">
+                            This Week's Highlights
+                        </div>
+                        <template for:each={weekMealHighlights} for:item="meal">
+                            <div key={meal.id} class="meal-item slds-m-bottom_x-small">
+                                <lightning-icon
+                                    icon-name="standard:product"
+                                    size="x-small"
+                                    class="slds-m-right_x-small">
+                                </lightning-icon>
+                                <div class="meal-details">
+                                    <div class="meal-name">{meal.name}</div>
+                                    <div class="meal-day">{meal.day} - {meal.mealTime}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Loading State -->
+            <template if:true={isLoading}>
+                <lightning-spinner
+                    alternative-text="Loading..."
+                    size="small">
+                </lightning-spinner>
+            </template>
+
+            <!-- Error State -->
+            <template if:true={error}>
+                <div class="slds-text-color_error">
+                    {error}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
