@@ -1,0 +1,103 @@
+<template>
+    <lightning-card title="NeuroThrive Dashboard" icon-name="standard:dashboard">
+        <div slot="actions">
+            <lightning-button-group>
+                <lightning-button
+                    label="Today"
+                    onclick={handleTodayClick}
+                    variant={todayButtonVariant}>
+                </lightning-button>
+                <lightning-button
+                    label="This Week"
+                    onclick={handleWeekClick}
+                    variant={weekButtonVariant}>
+                </lightning-button>
+                <lightning-button
+                    label="This Month"
+                    onclick={handleMonthClick}
+                    variant={monthButtonVariant}>
+                </lightning-button>
+            </lightning-button-group>
+            <lightning-button-icon
+                icon-name="utility:refresh"
+                alternative-text="Refresh"
+                onclick={handleRefresh}
+                class="slds-m-left_small">
+            </lightning-button-icon>
+        </div>
+
+        <div class="slds-p-around_medium">
+            <!-- Date Range Display -->
+            <div class="slds-text-heading_small slds-m-bottom_medium">
+                <lightning-formatted-date-time
+                    value={dateRange.start}>
+                </lightning-formatted-date-time>
+                <span class="slds-m-horizontal_x-small">-</span>
+                <lightning-formatted-date-time
+                    value={dateRange.end}>
+                </lightning-formatted-date-time>
+            </div>
+
+            <!-- Sync Status -->
+            <template if:true={showSyncStatus}>
+                <div class="sync-status slds-m-bottom_medium">
+                    <lightning-icon
+                        icon-name={syncIcon}
+                        size="x-small"
+                        variant={syncVariant}>
+                    </lightning-icon>
+                    <span class="slds-m-left_x-small">{syncMessage}</span>
+                </div>
+            </template>
+
+            <!-- Grid Layout -->
+            <div class="dashboard-grid">
+                <!-- Job Search Summary Card -->
+                <div class="grid-item">
+                    <c-job-search-summary-card
+                        date-range={dateRange}>
+                    </c-job-search-summary-card>
+                </div>
+
+                <!-- Meal Planning Summary Card -->
+                <div class="grid-item">
+                    <c-meal-planning-summary-card
+                        date-range={dateRange}>
+                    </c-meal-planning-summary-card>
+                </div>
+
+                <!-- Wellness Summary Card -->
+                <div class="grid-item">
+                    <c-wellness-summary-card
+                        date-range={dateRange}>
+                    </c-wellness-summary-card>
+                </div>
+
+                <!-- Savings Summary Card -->
+                <div class="grid-item">
+                    <c-savings-summary-card
+                        date-range={dateRange}>
+                    </c-savings-summary-card>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner
+                    alternative-text="Loading..."
+                    size="medium">
+                </lightning-spinner>
+            </template>
+
+            <!-- Error Message -->
+            <template if:true={error}>
+                <div class="slds-m-top_medium">
+                    <lightning-formatted-text
+                        value={error}
+                        class="slds-text-color_error">
+                    </lightning-formatted-text>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

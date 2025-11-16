@@ -1,0 +1,103 @@
+<template>
+    <lightning-card title="Savings & Coupons" icon-name="standard:discounts">
+        <div slot="actions">
+            <lightning-button-menu
+                alternative-text="Actions"
+                icon-name="utility:down"
+                menu-alignment="right">
+                <lightning-menu-item
+                    value="browse"
+                    label="Browse Coupons"
+                    icon-name="utility:search">
+                </lightning-menu-item>
+                <lightning-menu-item
+                    value="shopping"
+                    label="View Shopping Lists"
+                    icon-name="utility:list">
+                </lightning-menu-item>
+            </lightning-button-menu>
+        </div>
+
+        <div class="slds-p-around_medium">
+            <template if:false={isLoading}>
+                <!-- Savings Highlight -->
+                <div class="savings-highlight">
+                    <div class="savings-amount">${totalSavings}</div>
+                    <div class="savings-label">Total Estimated Savings</div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid slds-m-top_medium">
+                    <div class="stat-item">
+                        <div class="stat-value">{activeCoupons}</div>
+                        <div class="stat-label">Active Coupons</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{listsReady}</div>
+                        <div class="stat-label">Shopping Lists</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{itemsOnLists}</div>
+                        <div class="stat-label">Items Ready</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{savingsPercent}%</div>
+                        <div class="stat-label">Avg Savings</div>
+                    </div>
+                </div>
+
+                <!-- High Value Coupons Alert -->
+                <template if:true={hasHighValueCoupons}>
+                    <div class="slds-m-top_medium">
+                        <div class="high-value-alert">
+                            <lightning-icon
+                                icon-name="utility:salesforce1"
+                                size="small"
+                                variant="warning">
+                            </lightning-icon>
+                            <div class="slds-m-left_small">
+                                <div class="alert-title">High Value Coupons Available!</div>
+                                <div class="alert-detail">
+                                    {highValueCouponCount} coupons worth ${highValueSavings}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Savings Tips -->
+                <div class="slds-m-top_medium">
+                    <div class="slds-text-heading_small slds-m-bottom_x-small">
+                        Smart Savings Tips
+                    </div>
+                    <div class="tips-container">
+                        <div class="tip-item">
+                            <lightning-icon
+                                icon-name="utility:info"
+                                size="x-small">
+                            </lightning-icon>
+                            <span class="slds-m-left_x-small">
+                                {savingsTip}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Loading State -->
+            <template if:true={isLoading}>
+                <lightning-spinner
+                    alternative-text="Loading..."
+                    size="small">
+                </lightning-spinner>
+            </template>
+
+            <!-- Error State -->
+            <template if:true={error}>
+                <div class="slds-text-color_error">
+                    {error}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
