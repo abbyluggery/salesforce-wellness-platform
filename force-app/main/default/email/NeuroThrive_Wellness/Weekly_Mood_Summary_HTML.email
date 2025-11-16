@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Weekly Mood Summary</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4A90E2;
+        }
+        .header h1 {
+            color: #4A90E2;
+            margin: 0;
+            font-size: 28px;
+        }
+        .emoji {
+            font-size: 32px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #4A90E2;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 5px;
+        }
+        .trend {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .trend-improving {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .trend-stable {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .trend-declining {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .section {
+            margin: 25px 0;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title .emoji {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        .insights-box {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .recommendations {
+            list-style: none;
+            padding: 0;
+        }
+        .recommendations li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .recommendations li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4A90E2;
+            font-weight: bold;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #4A90E2;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="emoji">🧠</span>
+            <h1>Your Weekly Mood Summary</h1>
+            <p style="color: #666;">Week ending: {!CurrentDate}</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">📊</span> This Week's Mood Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Mood Check-ins</div>
+                    <div class="stat-value">{!TotalMoodEntries}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Average Mood</div>
+                    <div class="stat-value">{!AverageMood}/10</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Highest Mood</div>
+                    <div class="stat-value">{!HighestMood}/10</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Lowest Mood</div>
+                    <div class="stat-value">{!LowestMood}/10</div>
+                </div>
+            </div>
+            <p style="margin-top: 15px;">
+                <strong>Overall Trend:</strong>
+                <span class="trend trend-{!MoodTrendClass}">{!MoodTrend}</span>
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">💡</span> Insights & Patterns</h2>
+            <div class="insights-box">
+                {!PersonalizedInsights}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">🎯</span> Wellness Recommendations</h2>
+            <ul class="recommendations">
+                <li>Continue tracking your mood daily for better insights</li>
+                <li>Notice patterns between activities and your mood</li>
+                <li>Practice gratitude journaling to boost positive emotions</li>
+                <li>If you notice declining patterns, reach out for support</li>
+                <li>Celebrate your wins - even the small ones!</li>
+            </ul>
+        </div>
+
+        <div class="section" style="background-color: #f0f7ff; padding: 20px; border-radius: 6px; margin-top: 30px;">
+            <h2 class="section-title"><span class="emoji">🌟</span> Remember</h2>
+            <p style="margin: 0;">
+                Your mental health journey is unique. These insights are here to help you understand yourself better, not to judge. Every step toward self-awareness is progress.
+            </p>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="{!DashboardURL}" class="cta-button">View Full Mood History →</a>
+        </div>
+
+        <div class="footer">
+            <p>Sent by your NeuroThrive Wellness Platform</p>
+            <p style="font-size: 12px; color: #999;">
+                You're receiving this because you have active mood tracking enabled.<br>
+                To change notification preferences, update your settings in the dashboard.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

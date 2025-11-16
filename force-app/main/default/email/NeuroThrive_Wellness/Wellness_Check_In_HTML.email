@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Check-In</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #9c27b0;
+        }
+        .header h1 {
+            color: #9c27b0;
+            margin: 0;
+            font-size: 28px;
+        }
+        .emoji {
+            font-size: 32px;
+        }
+        .supportive-message {
+            background-color: #f3e5f5;
+            padding: 20px;
+            border-left: 4px solid #9c27b0;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .resources-section {
+            background-color: #fff8e1;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .therapy-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .therapy-card {
+            padding: 15px;
+            background-color: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .therapy-card h4 {
+            margin: 0 0 8px 0;
+            color: #9c27b0;
+        }
+        .therapy-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #9c27b0;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 10px 5px;
+        }
+        .cta-button-secondary {
+            background-color: #f3e5f5;
+            color: #9c27b0;
+        }
+        .crisis-resources {
+            background-color: #ffebee;
+            border: 2px solid #f44336;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 25px 0;
+        }
+        .crisis-resources h3 {
+            color: #c62828;
+            margin-top: 0;
+        }
+        .self-care-tips {
+            list-style: none;
+            padding: 0;
+        }
+        .self-care-tips li {
+            padding: 10px 0;
+            padding-left: 35px;
+            position: relative;
+        }
+        .self-care-tips li:before {
+            content: "💚";
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="emoji">💜</span>
+            <h1>We're Here For You</h1>
+            <p style="color: #666;">Wellness Check-In</p>
+        </div>
+
+        <div class="supportive-message">
+            <p style="font-size: 16px; margin: 0;">
+                We noticed your recent mood tracking shows you might be going through a difficult time.
+                We want you to know that it's completely okay to not be okay, and reaching out is a sign of strength, not weakness.
+            </p>
+        </div>
+
+        <div style="margin: 25px 0;">
+            <h2 style="color: #9c27b0;">💭 Quick Self-Care Tips</h2>
+            <ul class="self-care-tips">
+                <li>Take three deep breaths - inhale for 4 counts, hold for 4, exhale for 4</li>
+                <li>Step outside for fresh air, even if just for 5 minutes</li>
+                <li>Drink a glass of water - hydration affects mood</li>
+                <li>Reach out to someone you trust</li>
+                <li>Do one small thing that usually brings you comfort</li>
+            </ul>
+        </div>
+
+        <div class="resources-section">
+            <h2 style="color: #f57c00; margin-top: 0;">🧘 Guided Therapy Exercises</h2>
+            <p>Try one of these evidence-based techniques:</p>
+            <div class="therapy-options">
+                <div class="therapy-card">
+                    <h4>CBT - Cognitive Behavioral Therapy</h4>
+                    <p>Identify and challenge negative thought patterns</p>
+                </div>
+                <div class="therapy-card">
+                    <h4>DBT - Dialectical Behavior Therapy</h4>
+                    <p>Learn distress tolerance and emotion regulation skills</p>
+                </div>
+                <div class="therapy-card">
+                    <h4>Grounding Technique</h4>
+                    <p>5-4-3-2-1 sensory awareness exercise for anxiety</p>
+                </div>
+                <div class="therapy-card">
+                    <h4>Mindfulness Meditation</h4>
+                    <p>Guided breathing and present-moment awareness</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="{!TherapyExercisesURL}" class="cta-button">Start Guided Exercise →</a>
+            </div>
+        </div>
+
+        <div class="crisis-resources">
+            <h3>🆘 Immediate Support Resources</h3>
+            <p style="margin: 10px 0;">
+                <strong>If you're in crisis or having thoughts of self-harm:</strong>
+            </p>
+            <ul style="margin: 10px 0;">
+                <li><strong>988 Suicide & Crisis Lifeline:</strong> Call or text 988</li>
+                <li><strong>Crisis Text Line:</strong> Text "HELLO" to 741741</li>
+                <li><strong>SAMHSA National Helpline:</strong> 1-800-662-4357 (24/7)</li>
+                <li><strong>Emergency:</strong> Call 911 or go to nearest ER</li>
+            </ul>
+            <p style="font-size: 14px; margin-top: 15px; color: #666;">
+                These services are free, confidential, and available 24/7.
+            </p>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <h3 style="color: #9c27b0;">What Can Help Right Now?</h3>
+            <a href="{!MoodLogURL}" class="cta-button">Log Current Mood</a>
+            <a href="{!TherapyURL}" class="cta-button cta-button-secondary">Try Therapy Exercise</a>
+        </div>
+
+        <div style="background-color: #f0f7ff; padding: 20px; border-radius: 6px; margin: 25px 0;">
+            <h3 style="color: #4A90E2; margin-top: 0;">💙 Remember</h3>
+            <p style="margin: 0;">
+                Difficult feelings are temporary, even when they feel overwhelming.
+                You've made it through 100% of your worst days so far.
+                Taking care of your mental health is just as important as physical health,
+                and asking for help is brave.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>Sent by your NeuroThrive Wellness Platform</p>
+            <p style="font-size: 12px; color: #999;">
+                This automated check-in was sent because your recent mood scores indicated you might need support.<br>
+                We care about your wellbeing and want to help you access the resources you need.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

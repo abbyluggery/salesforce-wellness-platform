@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Win Check-In</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #28a745;
+        }
+        .header h1 {
+            color: #28a745;
+            margin: 0;
+            font-size: 28px;
+        }
+        .emoji {
+            font-size: 32px;
+        }
+        .win-examples {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .win-examples h3 {
+            margin-top: 0;
+            color: #28a745;
+        }
+        .win-examples ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .win-examples li {
+            margin: 8px 0;
+        }
+        .section {
+            margin: 25px 0;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title .emoji {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .benefit-item {
+            padding: 12px;
+            background-color: #e7f6ec;
+            border-radius: 6px;
+            padding-left: 40px;
+            position: relative;
+        }
+        .benefit-item:before {
+            content: "✨";
+            position: absolute;
+            left: 12px;
+            font-size: 20px;
+        }
+        .cta-section {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 25px 0;
+        }
+        .cta-section h3 {
+            margin: 0 0 15px 0;
+            font-size: 22px;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #28a745;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .motivation-quote {
+            background-color: #fff8e1;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 4px;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="emoji">🎯</span>
+            <h1>Daily Win Check-In</h1>
+            <p style="color: #666;">Hi there! It's {!CurrentDate} evening</p>
+        </div>
+
+        <div class="section">
+            <p style="font-size: 16px;">
+                We wanted to check in - have you celebrated any wins today?
+            </p>
+        </div>
+
+        <div class="win-examples">
+            <h3 class="section-title"><span class="emoji">💡</span> Remember: Wins Don't Have to Be Big!</h3>
+            <p>They can be:</p>
+            <ul>
+                <li>Got out of bed when it was hard</li>
+                <li>Had a difficult conversation</li>
+                <li>Completed a task you'd been avoiding</li>
+                <li>Practiced self-care</li>
+                <li>Helped someone</li>
+                <li>Learned something new</li>
+                <li>Made progress on a goal</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="emoji">🌟</span> Why Track Wins?</h2>
+            <p>Research shows that acknowledging your accomplishments helps:</p>
+            <div class="benefits-grid">
+                <div class="benefit-item">Combat imposter syndrome</div>
+                <div class="benefit-item">Build confidence and self-esteem</div>
+                <div class="benefit-item">Create positive momentum</div>
+                <div class="benefit-item">Reframe negative self-talk</div>
+                <div class="benefit-item">Track your growth over time</div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h3><span class="emoji">📝</span> Take 1 Minute</h3>
+            <p style="margin: 10px 0;">Log at least one win from today</p>
+            <a href="{!DashboardURL}" class="cta-button">Log Your Win →</a>
+        </div>
+
+        <div class="motivation-quote">
+            <p style="margin: 0; font-size: 16px;">
+                "You've got this! Every step forward counts. 💪"
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>Sent by your NeuroThrive Wellness Platform</p>
+            <p style="font-size: 12px; color: #999;">
+                Daily win reminders help build positive habits and boost self-awareness.<br>
+                To adjust notification times, update your settings in the dashboard.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
