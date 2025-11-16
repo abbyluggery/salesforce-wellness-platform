@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "Meal Planner AI",
+    "slug": "meal-planner-ai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#4bca81"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mealplanner.ai",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "NSCalendarsUsageDescription": "This app needs access to your calendar to schedule meal prep and grocery shopping.",
+        "NSRemindersUsageDescription": "This app uses reminders for meal prep notifications.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to save and share shopping lists."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.mealplanner.ai",
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-calendar",
+      "expo-notifications"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "your-project-id-here"
+      }
+    }
+  }
+}
